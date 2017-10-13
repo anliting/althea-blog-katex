@@ -32,7 +32,13 @@
             let
                 n=document.createElement('span'),
                 p=s.parentNode
-            katex.render(s.textContent,n)
+            try{
+                katex.render(s.textContent,n)
+            }catch(e){
+                n.title=e
+                n.style.fontFamily='monospace'
+                n.textContent=s.textContent
+            }
             p.insertBefore(n,s)
             p.removeChild(s)
         })
