@@ -21,14 +21,15 @@ async function load(){
 ;(async()=>{
     await load()
     this.addPagePlugin(div=>{
-        for(let s of div.getElementsByTagName('script'))
-            if(s.type=='althea-katex'){
-                let
-                    n=document.createElement('span'),
-                    p=s.parentNode
-                katex.render(s.textContent,n)
-                p.insertBefore(n,s)
-                p.removeChild(s)
-            }
+        ;[...div.getElementsByTagName('script')].filter(
+            s=>s.type=='althea-katex'
+        ).forEach(s=>{
+            let
+                n=document.createElement('span'),
+                p=s.parentNode
+            katex.render(s.textContent,n)
+            p.insertBefore(n,s)
+            p.removeChild(s)
+        })
     })
 })()
