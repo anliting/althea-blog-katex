@@ -36,7 +36,7 @@
                 n=document.createElement('span'),
                 p=s.parentNode
             try{
-                katex.render(s.textContent,n)
+                katex.render(decodeURIComponent(s.textContent),n)
             }catch(e){
                 n.title=e
                 n.style.fontFamily='monospace'
