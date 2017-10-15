@@ -24,11 +24,14 @@
             )
         )
     }
-    await load()
-    this.addPagePlugin(div=>{
-        ;[...div.getElementsByTagName('script')].filter(
+    this.addPagePlugin(async div=>{
+        let scripts=[...div.getElementsByTagName('script')].filter(
             s=>s.type=='althea-katex'
-        ).forEach(s=>{
+        )
+        if(scripts.length==0)
+            return
+        await load()
+        scripts.forEach(s=>{
             let
                 n=document.createElement('span'),
                 p=s.parentNode
