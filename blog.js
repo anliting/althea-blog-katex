@@ -1,6 +1,6 @@
 ;(async()=>{
-    let core=await module.module('/lib/core.static.js')
-    let{dom}=core
+    let{dom}=await module.module('/lib/core.static.js')
+    let loaded
     async function load(){
         let
             root='https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3',
@@ -24,13 +24,18 @@
             )
         )
     }
+    function cachedLoad(){
+        if(!loaded)
+            loaded=load()
+        return loaded
+    }
     this.addPagePlugin(async div=>{
         let scripts=[...div.getElementsByTagName('script')].filter(
             s=>s.type=='althea-katex'
         )
         if(scripts.length==0)
             return
-        await load()
+        await cachedLoad()
         scripts.forEach(s=>{
             let
                 n=document.createElement('span'),
@@ -42,8 +47,7 @@
                 n.style.fontFamily='monospace'
                 n.textContent=s.textContent
             }
-            p.insertBefore(n,s)
-            p.removeChild(s)
+            p.replaceChild(n,s)
         })
     })
 })()
