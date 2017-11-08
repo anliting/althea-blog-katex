@@ -28,26 +28,27 @@ function cachedLoad(){
         loaded=load()
     return loaded
 }
-export default blog=>{
-    blog.addPagePlugin(async div=>{
-        let scripts=[...div.getElementsByTagName('script')].filter(
-            s=>s.type=='althea-katex'
-        )
-        if(scripts.length==0)
-            return
-        await cachedLoad()
-        scripts.forEach(s=>{
-            let
-                n=document.createElement('span'),
-                p=s.parentNode
-            try{
-                katex.render(decodeURIComponent(s.textContent),n)
-            }catch(e){
-                n.title=e
-                n.style.fontFamily='monospace'
-                n.textContent=s.textContent
-            }
-            p.replaceChild(n,s)
-        })
+async function plugin(div){
+    let scripts=[...div.getElementsByTagName('script')].filter(
+        s=>s.type=='althea-katex'
+    )
+    if(scripts.length==0)
+        return
+    await cachedLoad()
+    scripts.forEach(s=>{
+        let
+            n=document.createElement('span'),
+            p=s.parentNode
+        try{
+            katex.render(decodeURIComponent(s.textContent),n)
+        }catch(e){
+            n.title=e
+            n.style.fontFamily='monospace'
+            n.textContent=s.textContent
+        }
+        p.replaceChild(n,s)
     })
+}
+export default blog=>{
+    blog.addPagePlugin(plugin)
 }
