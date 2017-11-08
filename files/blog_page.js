@@ -49,6 +49,4 @@ async function plugin(div){
         p.replaceChild(n,s)
     })
 }
-export default blog=>{
-    blog.addPagePlugin(plugin)
-}
+export default plugin
