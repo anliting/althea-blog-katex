@@ -40,7 +40,10 @@ async function plugin(div){
             n=document.createElement('span'),
             p=s.parentNode
         try{
-            katex.render(decodeURIComponent(s.textContent),n)
+            let option={}
+            if(s.dataset.option=='displayMode')
+                option.displayMode=true
+            katex.render(decodeURIComponent(s.textContent),n,option)
         }catch(e){
             n.title=e
             n.style.fontFamily='monospace'
