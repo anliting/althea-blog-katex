@@ -2,7 +2,7 @@ import{doe}from'/lib/core.static.js'
 let loaded
 async function load(){
     let
-        root='https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.8.3',
+        root='https://cdn.jsdelivr.net/npm/katex@0.10.0/dist',
         styleSheetUrl=`${root}/katex.min.css`,
         scriptUrl=`${root}/katex.min.js`
     doe.head(
